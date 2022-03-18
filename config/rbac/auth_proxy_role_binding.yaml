@@ -8,5 +8,5 @@ roleRef:
   name: proxy-role
 subjects:
 - kind: ServiceAccount
-  name: default
-  namespace: system
+  name: aws-iam-operator-acct
+  namespace: aws-iam-operator-system

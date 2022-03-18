@@ -5,6 +5,11 @@ metadata:
     control-plane: aws-iam-operator-manager
   name: system
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: acct
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,19 +18,20 @@ metadata:
   labels:
     control-plane: aws-iam-operator-manager
 spec:
+  replicas: 1
   selector:
     matchLabels:
       control-plane: aws-iam-operator-manager
-  replicas: 1
   template:
     metadata:
       labels:
         control-plane: aws-iam-operator-manager
     spec:
+      serviceAccountName: acct
       containers:
       - args:
         - --enable-leader-election
-        image: redradrat/aws-iam-operator:latest
+        image: redradrat/aws-iam-operator:v0.2.0
         name: manager
         resources:
           limits:
